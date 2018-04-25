@@ -116,10 +116,11 @@ func (t *Text) Redraw(r image.Rectangle, f *draw.Font, b *draw.Image, odx int, n
 	// log.Println("--- Text Redraw start", r, odx, "tag type:" ,  t.whatstring())
 	// defer log.Println("--- Text Redraw end")
 	// TODO(rjk): It is possible that this does unnecessary work.
-	t.fr.Init(r, f, b, t.fr.Cols)
+	t.fr.Init(r, f, b)
 	rr := t.fr.Rect
 	rr.Min.X -= t.display.ScaleSize(Scrollwid + Scrollgap) /* back fill to scroll bar */
 	if !noredraw {
+		// TODO(rjk): Edwood should let frame own the task of drawing the background.
 		t.fr.Background.Draw(rr, t.fr.Cols[frame.ColBack], nil, image.ZP)
 	}
 	/* use no wider than 3-space tabs in a directory */
